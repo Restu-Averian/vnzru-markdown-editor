@@ -15,13 +15,14 @@
     "react-component",
     "component"
   ],
+  "types": "dist/index.d.ts",
   "author": "Restu Averian Putra <restuaverianputra123@gmail.com>",
   "main": "dist/vnzru-markdown_editor.cjs.js",
   "module": "dist/vnzru-markdown_editor.es.js",
   "homepage": "https://github.com/Restu-Averian/vnzru-markdown-editor",
   "scripts": {
     "dev": "vite",
-    "build": "rm -rf dist && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
