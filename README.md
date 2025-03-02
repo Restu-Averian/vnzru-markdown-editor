@@ -6,5 +6,6 @@
 - [x] Add shortcut
 - [x] Add toolbar
 - [x] Possible user to add custom toolbar
-- [] Enhance design
 - [] Preview result
+- [] Enhance design
+- [] Create page for showing the preview
