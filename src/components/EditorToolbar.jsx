@@ -5,8 +5,6 @@ import { listToolbar } from "../constants";
 const EditorToolbar_ = () => {
   const { onActionButton } = useEditorContext();
 
-  console.log("ls : ", listToolbar);
-
   return (
     <div>
       {listToolbar?.map((toolbar, key) => {
