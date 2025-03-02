@@ -10,7 +10,7 @@ declare module "vnzru-markdown_editor" {
      * @description
      * custom event click for your custom toolbar data.
      */
-    customClick?: (e: HTMLButtonElement) => void;
+    onClickToolbar?: (e: HTMLButtonElement) => void;
 
     /**
      *

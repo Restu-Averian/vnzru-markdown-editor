@@ -29,8 +29,8 @@ const EditorToolbar_ = () => {
             onClick={(e) => {
               e?.preventDefault();
 
-              if (typeof action?.customClick === "function") {
-                action?.customClick(e);
+              if (typeof action?.onClickToolbar === "function") {
+                action?.onClickToolbar(e);
               } else {
                 onActionButton({ type: action?.name, e });
               }
