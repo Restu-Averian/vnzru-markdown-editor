@@ -9,8 +9,7 @@ const VNZRU_MarkdownEditor_ = (
   {
     customActions = [],
     updateWhen = {
-      type: "del",
-      time: 1000,
+      type: "direct",
     },
     ...props
   },
