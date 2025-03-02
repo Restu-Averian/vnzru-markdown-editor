@@ -4,4 +4,7 @@
 
 - [x]Init project
 - [x] Add shortcut
-- [] Add toolbar
+- [x] Add toolbar
+- [] Enhance design
+- [] Possible user to add custom toolbar
+- [] Preview result
