@@ -1,13 +1,37 @@
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useMemo, useRef } from "react";
+import { toLowerCase } from "../helpers";
+import { listToolbar } from "../constants";
 
 const EditorContext = createContext({});
 
 export const useEditorContext = () => useContext(EditorContext);
 
-const EditorContextProvider = ({ children, textareaRefOut }) => {
+const EditorContextProvider = ({
+  children,
+  textareaRefOut,
+  customActions = [],
+}) => {
   const initTextareaRef = useRef(null);
 
   const textareaRef = textareaRefOut || initTextareaRef;
+
+  const customActionDatas = useMemo(() => {
+    return customActions?.map((custom, idx) => {
+      const hasInDefault = listToolbar?.find(
+        (defaultToolbar) =>
+          toLowerCase(custom?.name) === toLowerCase(defaultToolbar?.type)
+      );
+
+      if (hasInDefault) {
+        return {
+          ...custom,
+          name: `${custom?.name}_${idx + 1}`,
+        };
+      }
+
+      return custom;
+    });
+  }, [customActions]);
 
   const onGetTextData = () => {
     if (!textareaRef?.current) return;
@@ -53,44 +77,75 @@ const EditorContextProvider = ({ children, textareaRefOut }) => {
 
     e.preventDefault();
 
+    customActionDatas?.forEach((action) => {
+      if (toLowerCase(type) === toLowerCase(action?.name)) {
+        onFormat({
+          format: action?.format,
+          formatSuffix: action?.formatSuffix,
+          allowSuffixEmpty: action?.allowSuffixEmpty,
+        });
+      }
+    });
+
     switch (type) {
       case "bold":
-        return onFormat({ format: "**" });
+        onFormat({ format: "**" });
+        break;
       case "italic":
-        return onFormat({ format: "_" });
+        onFormat({ format: "_" });
+        break;
       case "strike-through":
-        return onFormat({ format: "~~" });
+        onFormat({ format: "~~" });
+        break;
       case "quote":
-        return onFormat({
+        onFormat({
           format: selectionStart === 0 ? "> " : "\n> ",
 
           formatSuffix: "\n",
         });
+        break;
       case "link":
-        return onFormat({
+        onFormat({
           format: "[",
           formatSuffix: "](url)",
         });
+        break;
       case "insert-image":
-        return onFormat({
+        onFormat({
           format: selectedText ? "![" : "![image",
 
           formatSuffix: "](url)",
         });
+
+        break;
       case "code":
-        return onFormat({ format: "`" });
+        onFormat({ format: "`" });
+
+        break;
       case "unordered-list":
-        return onFormat({
+        onFormat({
           format: selectionStart === 0 ? "- " : "\n- ",
 
           formatSuffix: selectedText ? "\n" : "",
 
           allowSuffixEmpty: true,
         });
+
+        break;
       case "underlined":
-        return onFormat({ format: "<ins>", formatSuffix: "</ins>" });
+        onFormat({ format: "<ins>", formatSuffix: "</ins>" });
+
+        break;
       default:
-        return console.warn("no action hit");
+        const typeAlsoNotCustom = customActionDatas?.find(
+          (action) => toLowerCase(type) !== toLowerCase(action?.name)
+        );
+
+        if (typeAlsoNotCustom) {
+          console.warn("no action hit");
+        }
+
+        break;
     }
   };
 
@@ -98,6 +153,12 @@ const EditorContextProvider = ({ children, textareaRefOut }) => {
     const code = e?.code;
     const isCtrl = e?.ctrlKey;
     const isShift = e?.shiftKey;
+
+    const customKeyMaps = {};
+
+    customActionDatas?.forEach((action) => {
+      customKeyMaps[action?.name] = action?.shortcut(e);
+    });
 
     const keyMaps = {
       bold: code === "KeyB" && isCtrl,
@@ -109,6 +170,7 @@ const EditorContextProvider = ({ children, textareaRefOut }) => {
       "strike-trhough": code === "KeyX" && isCtrl && isShift,
       "unordered-list": code === "KeyU" && isCtrl && isShift,
       "insert-image": code === "KeyK" && isCtrl,
+      ...customKeyMaps,
     };
 
     Object.entries(keyMaps)?.forEach(([key, isActionHit]) => {
@@ -126,6 +188,7 @@ const EditorContextProvider = ({ children, textareaRefOut }) => {
         onGetTextData,
         onKeyDown,
         textareaRef,
+        customActionDatas,
       }}
     >
       {children}

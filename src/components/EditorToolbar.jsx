@@ -3,7 +3,7 @@ import { useEditorContext } from "../context/EditorContextProvider";
 import { listToolbar } from "../constants";
 
 const EditorToolbar_ = () => {
-  const { onActionButton } = useEditorContext();
+  const { onActionButton, customActionDatas } = useEditorContext();
 
   return (
     <div>
@@ -16,6 +16,25 @@ const EditorToolbar_ = () => {
             }}
           >
             {toolbar?.text}
+          </button>
+        );
+      })}
+
+      {customActionDatas?.map((action, key) => {
+        return (
+          <button
+            key={key}
+            onClick={(e) => {
+              e?.preventDefault();
+
+              if (typeof action?.customAction === "function") {
+                action?.customAction();
+              } else {
+                onActionButton({ type: action?.name, e });
+              }
+            }}
+          >
+            {action?.toolbarText}
           </button>
         );
       })}
