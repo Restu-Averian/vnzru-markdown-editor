@@ -22,7 +22,7 @@ const VNZRU_MarkdownEditor_ = ({ customActions = [], ...props }, ref) => {
   return (
     <EditorContextProvider textareaRefOut={ref} customActions={customActions}>
       <EditorToolbar />
-      <Editor />
+      <Editor {...props} />
     </EditorContextProvider>
   );
 };

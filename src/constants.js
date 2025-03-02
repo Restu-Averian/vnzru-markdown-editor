@@ -1,38 +1,38 @@
 export const listToolbar = [
   {
-    text: "B",
+    toolbarText: "B",
     type: "bold",
   },
   {
-    text: "I",
+    toolbarText: "I",
     type: "italic",
   },
   {
-    text: "U",
+    toolbarText: "U",
     type: "underlined",
   },
   {
-    text: "Q",
+    toolbarText: "Q",
     type: "quote",
   },
   {
-    text: "L",
+    toolbarText: "L",
     type: "link",
   },
   {
-    text: "C",
+    toolbarText: "C",
     type: "code",
   },
   {
-    text: "S",
+    toolbarText: "S",
     type: "strike-trhough",
   },
   {
-    text: "UL",
+    toolbarText: "UL",
     type: "unordered-list",
   },
   {
-    text: "IM",
+    toolbarText: "IM",
     type: "insert-image",
   },
 ];

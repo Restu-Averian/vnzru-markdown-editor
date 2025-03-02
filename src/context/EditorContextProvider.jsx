@@ -2,6 +2,7 @@ import { createContext, useContext, useMemo, useRef } from "react";
 import { toLowerCase } from "../helpers";
 import { listToolbar } from "../constants";
 
+/** @type {import("react").Context<import("./types").EditorContextData>} */
 const EditorContext = createContext({});
 
 export const useEditorContext = () => useContext(EditorContext);

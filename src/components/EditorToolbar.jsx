@@ -6,16 +6,17 @@ const EditorToolbar_ = () => {
   const { onActionButton, customActionDatas } = useEditorContext();
 
   return (
-    <div>
+    <div className="__vnzru-editor_toolbar-wrapper__">
       {listToolbar?.map((toolbar, key) => {
         return (
           <button
+            className="__vnzru-editor_toolbar-btn__"
             key={key}
             onClick={(e) => {
               onActionButton({ type: toolbar?.type, e });
             }}
           >
-            {toolbar?.text}
+            {toolbar?.toolbarText}
           </button>
         );
       })}
@@ -23,12 +24,13 @@ const EditorToolbar_ = () => {
       {customActionDatas?.map((action, key) => {
         return (
           <button
+            className="__vnzru-editor_toolbar-btn__"
             key={key}
             onClick={(e) => {
               e?.preventDefault();
 
-              if (typeof action?.customAction === "function") {
-                action?.customAction();
+              if (typeof action?.customClick === "function") {
+                action?.customClick(e);
               } else {
                 onActionButton({ type: action?.name, e });
               }
