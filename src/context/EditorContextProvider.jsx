@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useRef } from "react";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
 import { toLowerCase } from "../helpers";
 import { listToolbar } from "../constants";
 
@@ -37,7 +37,7 @@ const EditorContextProvider = ({
   const onGetTextData = () => {
     if (!textareaRef?.current) return;
 
-    const { selectionStart, selectionEnd, value } = textareaRef?.current;
+    const { selectionStart, selectionEnd, value = "" } = textareaRef?.current;
 
     const beforeSelected = value?.substring(0, selectionStart);
     const selectedText = value?.substring(selectionStart, selectionEnd);
@@ -150,6 +150,10 @@ const EditorContextProvider = ({
     }
   };
 
+  /**
+   *
+   * @param {React.KeyboardEvent<HTMLTextAreaElement>} e
+   */
   const onKeyDown = (e) => {
     const code = e?.code;
     const isCtrl = e?.ctrlKey;

@@ -11,4 +11,14 @@
  * @property {import("vnzru-markdown_editor").customActionsProps[]} customActionDatas
  */
 
+/**
+ * @typedef {Object} EditorPreviewContextData
+ *
+ * @property {string} value
+ *
+ * @property {import("react").Dispatch<import("react").SetStateAction<string>>} setValue
+ *
+ * @property {import("vnzru-markdown_editor").updateWhenProps} updateWhen
+ */
+
 export {};

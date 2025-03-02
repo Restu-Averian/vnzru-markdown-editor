@@ -2,8 +2,20 @@ import { forwardRef, memo } from "react";
 import Editor from "./components/Editor";
 import EditorContextProvider from "./context/EditorContextProvider";
 import EditorToolbar from "./components/EditorToolbar";
+import EditorPreview from "./components/EditorPreview";
+import EditorPreviewContextProvider from "./context/EditorPreviewContextProvider";
 
-const VNZRU_MarkdownEditor_ = ({ customActions = [], ...props }, ref) => {
+const VNZRU_MarkdownEditor_ = (
+  {
+    customActions = [],
+    updateWhen = {
+      type: "del",
+      time: 1000,
+    },
+    ...props
+  },
+  ref
+) => {
   /** example custom actions */
 
   // const dataCustomAction = [
@@ -22,7 +34,12 @@ const VNZRU_MarkdownEditor_ = ({ customActions = [], ...props }, ref) => {
   return (
     <EditorContextProvider textareaRefOut={ref} customActions={customActions}>
       <EditorToolbar />
-      <Editor {...props} />
+
+      <EditorPreviewContextProvider updateWhen={updateWhen}>
+        <Editor {...props} />
+
+        <EditorPreview />
+      </EditorPreviewContextProvider>
     </EditorContextProvider>
   );
 };

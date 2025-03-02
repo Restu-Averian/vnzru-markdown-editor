@@ -20,7 +20,7 @@ declare module "vnzru-markdown_editor" {
      * @description
      * custom shortcut for your custom toolbar data.
      */
-    shortcut?: (e: React.KeyboardEvent) => void;
+    shortcut?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 
     /**
      * @description
@@ -64,9 +64,14 @@ declare module "vnzru-markdown_editor" {
     allowSuffixEmpty?: boolean;
   };
 
+  export type updateWhenProps =
+    | { type: "direct" | "blur" }
+    | { type: "delay"; time?: number };
+
   export type VNZRU_MarkdownEditorProps =
     TextareaHTMLAttributes<HTMLTextAreaElement> & {
       customActions: customActionsProps[];
+      updateWhen: updateWhenProps;
     };
 
   const VNZRU_MarkdownEditor: (props: VNZRU_MarkdownEditorProps) => ReactNode;
